@@ -16,6 +16,7 @@
  */
 import * as posenet from '@tensorflow-models/posenet';
 import * as tf from '@tensorflow/tfjs';
+const similarity = require('compute-cosine-similarity');
 
 const color = 'aqua';
 const boundingBoxColor = 'red';
@@ -222,4 +223,26 @@ export function drawOffsetVectors(heatMapValues: any, offsets: any, outputStride
 
     drawSegment([heatmapY, heatmapX], [offsetPointY, offsetPointX], color, scale, ctx);
   }
+}
+
+export function cosineDistanceMatching(poseVector1: any, poseVector2: any) {
+  let cosineSimilarity = similarity(poseVector1, poseVector2);
+  // console.log(poseVector1, poseVector2, cosineSimilarity)
+  cosineSimilarity = Math.min(1, cosineSimilarity);
+  let distance = 2 * (1 - cosineSimilarity);
+  return Math.sqrt(distance);
+}
+
+export function createPoseVector(keypoints: any) {
+  var keypoints_arr = [];
+  var scores_arr = [];
+  for (let i = 0; i < keypoints.length; i++) {
+    const keypoint = keypoints[i];
+    keypoints_arr.push(keypoint.position.x);
+    keypoints_arr.push(keypoint.position.y);
+
+    scores_arr.push(keypoint.score);
+  }
+
+  return keypoints_arr.concat(scores_arr);
 }

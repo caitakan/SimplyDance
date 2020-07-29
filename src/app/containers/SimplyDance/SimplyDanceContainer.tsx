@@ -2,8 +2,16 @@ import React from 'react';
 import { RouteComponentProps } from 'react-router';
 import ReactPlayer from 'react-player';
 import * as posenet from '@tensorflow-models/posenet';
-import { drawKeypoints, drawSkeleton, drawBoundingBox } from './Utilities/util';
-export const SimplyDanceContainer = (props: RouteComponentProps<{ [key: string]: string }>) => {
+import {
+  drawKeypoints,
+  drawSkeleton,
+  drawBoundingBox,
+  createPoseVector,
+  cosineDistanceMatching
+} from './Utilities/util';
+const keysData = require('./Data/keys.json');
+const keyPointsDictionary = require('./Data/keyPointDict_resize.json');
+export const SimplyDanceContainer = React.memo((props: RouteComponentProps<{ [key: string]: string }>) => {
   const [isRefVideoPlay, setisRefVideoPlay] = React.useState<boolean>(false);
   const videoWidth = 600;
   const videoHeight = 500;
@@ -11,9 +19,20 @@ export const SimplyDanceContainer = (props: RouteComponentProps<{ [key: string]:
   const defaultMobileNetMultiplier = 0.75;
   const defaultMobileNetStride = 16;
   const defaultMobileNetInputResolution = 500;
-  //   const defaultResNetMultiplier = 1.0;
-  //   const defaultResNetStride = 32;
-  //   const defaultResNetInputResolution = 250;
+  const defaultHardLevel = 0.35;
+  const keys: string[] = keysData.map((key: any) => Object.keys(key)[0]);
+  let j = 0;
+  const newKeys = [keys[0]];
+  //make each frame at least 300 ms
+  keys.forEach((key, i) => {
+    if (i > 0 && Number(key) * 50 - 300 > Number(newKeys[j]) * 50) {
+      newKeys.push(key);
+      j++;
+    }
+  });
+  const isPlayRef = React.useRef(false);
+  const timeStamps: number[] = newKeys.map((key: any) => Number(key) * 50);
+  //   let timeStampIndex = 0;
   const guiState = {
     algorithm: 'single-pose',
     input: {
@@ -74,7 +93,7 @@ export const SimplyDanceContainer = (props: RouteComponentProps<{ [key: string]:
 
     return video;
   }
-
+  const keyIndexRef = React.useRef(-1);
   function detectPoseInRealTime(video: any, net: posenet.PoseNet) {
     const canvas = document.getElementById('output') as HTMLCanvasElement;
     const ctx = canvas.getContext('2d') as any;
@@ -89,87 +108,6 @@ export const SimplyDanceContainer = (props: RouteComponentProps<{ [key: string]:
     canvas.height = videoHeight;
 
     async function poseDetectionFrame() {
-      //   if (guiState.changeToArchitecture) {
-      //     // Important to purge variables and free up GPU memory
-      //     guiState.net.dispose();
-      //     toggleLoadingUI(true);
-      //     guiState.net = await posenet.load({
-      //       architecture: guiState.changeToArchitecture,
-      //       outputStride: guiState.outputStride,
-      //       inputResolution: guiState.inputResolution,
-      //       multiplier: guiState.multiplier
-      //     });
-      //     toggleLoadingUI(false);
-      //     guiState.architecture = guiState.changeToArchitecture;
-      //     guiState.changeToArchitecture = null;
-      //   }
-
-      //   if (guiState.changeToMultiplier) {
-      //     guiState.net.dispose();
-      //     toggleLoadingUI(true);
-      //     guiState.net = await posenet.load({
-      //       architecture: guiState.architecture,
-      //       outputStride: guiState.outputStride,
-      //       inputResolution: guiState.inputResolution,
-      //       multiplier: +guiState.changeToMultiplier,
-      //       quantBytes: guiState.quantBytes
-      //     });
-      //     toggleLoadingUI(false);
-      //     guiState.multiplier = +guiState.changeToMultiplier;
-      //     guiState.changeToMultiplier = null;
-      //   }
-
-      //   if (guiState.changeToOutputStride) {
-      //     // Important to purge variables and free up GPU memory
-      //     guiState.net.dispose();
-      //     toggleLoadingUI(true);
-      //     guiState.net = await posenet.load({
-      //       architecture: guiState.architecture,
-      //       outputStride: +guiState.changeToOutputStride,
-      //       inputResolution: guiState.inputResolution,
-      //       multiplier: guiState.multiplier,
-      //       quantBytes: guiState.quantBytes
-      //     });
-      //     toggleLoadingUI(false);
-      //     guiState.outputStride = +guiState.changeToOutputStride;
-      //     guiState.changeToOutputStride = null;
-      //   }
-
-      //   if (guiState.changeToInputResolution) {
-      //     // Important to purge variables and free up GPU memory
-      //     guiState.net.dispose();
-      //     toggleLoadingUI(true);
-      //     guiState.net = await posenet.load({
-      //       architecture: guiState.architecture,
-      //       outputStride: guiState.outputStride,
-      //       inputResolution: +guiState.changeToInputResolution,
-      //       multiplier: guiState.multiplier,
-      //       quantBytes: guiState.quantBytes
-      //     });
-      //     toggleLoadingUI(false);
-      //     guiState.inputResolution = +guiState.changeToInputResolution;
-      //     guiState.changeToInputResolution = null;
-      //   }
-
-      //   if (guiState.changeToQuantBytes) {
-      //     // Important to purge variables and free up GPU memory
-      //     guiState.net.dispose();
-      //     toggleLoadingUI(true);
-      //     guiState.net = await posenet.load({
-      //       architecture: guiState.architecture,
-      //       outputStride: guiState.outputStride,
-      //       inputResolution: guiState.inputResolution,
-      //       multiplier: guiState.multiplier,
-      //       quantBytes: guiState.changeToQuantBytes
-      //     });
-      //     toggleLoadingUI(false);
-      //     guiState.quantBytes = guiState.changeToQuantBytes;
-      //     guiState.changeToQuantBytes = null;
-      //   }
-
-      // Begin monitoring code for frames per second
-      //   stats.begin();
-
       let poses = [] as any;
       let minPoseConfidence: any;
       let minPartConfidence: any;
@@ -213,6 +151,40 @@ export const SimplyDanceContainer = (props: RouteComponentProps<{ [key: string]:
       // scores
       poses.forEach(({ score, keypoints }: any) => {
         if (score >= minPoseConfidence) {
+          if (keyIndexRef.current > -1 && keyIndexRef.current < newKeys.length) {
+            const refKeypoint = keyPointsDictionary[newKeys[keyIndexRef.current]];
+
+            var poseVector = createPoseVector(keypoints);
+            var gtVector = refKeypoint ? createPoseVector(refKeypoint) : keypoints;
+            var similarityScore = cosineDistanceMatching(poseVector, gtVector);
+            console.log(similarityScore);
+            if (similarityScore < defaultHardLevel) {
+              //   console.log('sim score', poseVector, similarityScore);
+              // gt_keypoints = JSON.parse(gtKeypointsList[gtKeypointsIdx]);
+              // gtKeypointsIdx = (gtKeypointsIdx + 1) % gtKeypointsList.length;
+              // console.log(gtKeypointsIdx);
+              refVideoPlayPauseToggle();
+            }
+            drawKeypoints(refKeypoint, minPartConfidence, ctx);
+            drawSkeleton(refKeypoint, minPartConfidence, ctx);
+            drawBoundingBox(refKeypoint, ctx);
+          }
+          const currentTime = Math.ceil(playerRef.current.getCurrentTime() * 1000);
+
+          if (
+            currentTime - 35 < timeStamps[keyIndexRef.current] &&
+            timeStamps[keyIndexRef.current] < currentTime + 35
+          ) {
+            console.log(
+              keyIndexRef.current,
+              currentTime,
+              newKeys[keyIndexRef.current],
+              Number(newKeys[keyIndexRef.current]) * 50 - currentTime
+            );
+
+            keyIndexRef.current++;
+            refVideoPlayPauseToggle();
+          }
           if (guiState.output.showPoints) {
             drawKeypoints(keypoints, minPartConfidence, ctx);
           }
@@ -231,15 +203,15 @@ export const SimplyDanceContainer = (props: RouteComponentProps<{ [key: string]:
     poseDetectionFrame();
   }
 
-  async function estimatePoseOnImage(imageElement: any) {
-    // load the posenet model from a checkpoint
-    const net = await posenet.load();
+  //   async function estimatePoseOnImage(imageElement: any) {
+  //     // load the posenet model from a checkpoint
+  //     const net = await posenet.load();
 
-    const pose = await net.estimateSinglePose(imageElement, {
-      flipHorizontal: false
-    });
-    return pose;
-  }
+  //     const pose = await net.estimateSinglePose(imageElement, {
+  //       flipHorizontal: false
+  //     });
+  //     return pose;
+  //   }
 
   async function bindPage() {
     const net = await posenet.load({ architecture: 'ResNet50' } as any);
@@ -257,18 +229,45 @@ export const SimplyDanceContainer = (props: RouteComponentProps<{ [key: string]:
     bindPage();
   }, []);
 
+  const playerRef = React.useRef(undefined as any);
+  const setPlayerRef = (player: ReactPlayer) => {
+    playerRef.current = player;
+  };
+
   const refVideoPlayPauseToggle = async () => {
-    const imageElement = document.getElementById('userVideo') as any;
-    const pose = await estimatePoseOnImage(imageElement);
-    console.log(pose);
+    // const imageElement = document.getElementById('userVideo') as any;
+    // const pose = await estimatePoseOnImage(imageElement);
+    // console.log(pose);
     // const refVideo = document.getElementById('refVideo') as any;
-    if (isRefVideoPlay) {
+    // console.log(playerRef.current.getCurrentTime());
+    if (keyIndexRef.current === -1) {
+      keyIndexRef.current = 0;
+    }
+    if (isPlayRef.current) {
       //   refVideo.pause();
       setisRefVideoPlay(false);
+      isPlayRef.current = false;
     } else {
       //   refVideo.play();
       setisRefVideoPlay(true);
+      isPlayRef.current = true;
     }
+  };
+
+  const onVideoStart = () => {
+    keyIndexRef.current = 0;
+  };
+  const onVideoPause = () => {
+    // console.log(
+    //   keyIndexRef.current - 1,
+    //   Math.ceil(playerRef.current.getCurrentTime() * 1000),
+    //   newKeys[keyIndexRef.current - 1],
+    //   Number(newKeys[keyIndexRef.current - 1]) * 50 - playerRef.current.getCurrentTime() * 1000
+    // );
+  };
+  const onVideoEnd = () => {
+    keyIndexRef.current = -1;
+    refVideoPlayPauseToggle();
   };
   return (
     <div className="simply-dance-container" style={{ margin: '0 150px' }}>
@@ -279,16 +278,22 @@ export const SimplyDanceContainer = (props: RouteComponentProps<{ [key: string]:
       />
       <div className="two-video-container" style={{ display: 'flex', margin: '20px 100px' }}>
         <ReactPlayer
+          ref={setPlayerRef}
           width={videoWidth}
           height={videoHeight}
           style={{ background: 'black' }}
           playing={isRefVideoPlay}
-          url="https://file-examples-com.github.io/uploads/2017/04/file_example_MP4_480_1_5MG.mp4"
+          url="https://youtu.be/BIB1QHuEsr4"
           config={{
             file: { attributes: { id: 'refVideo', crossOrigin: 'anonymous', width: videoWidth, height: videoHeight } }
           }}
-          onClick={refVideoPlayPauseToggle}
+          onClick={null}
+          onStart={onVideoStart}
+          onPause={onVideoPause}
+          muted={true}
+          onEnded={onVideoEnd}
         />
+
         <button
           className="start-button"
           onClick={refVideoPlayPauseToggle}
@@ -310,4 +315,4 @@ export const SimplyDanceContainer = (props: RouteComponentProps<{ [key: string]:
       </div>
     </div>
   );
-};
+});
