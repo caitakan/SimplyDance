@@ -10,7 +10,8 @@ import {
   cosineDistanceMatching
 } from './Utilities/util';
 const keysData = require('./Data/keys.json');
-const keyPointsDictionary = require('./Data/keyPointDict_resize.json');
+// const keyPointsDictionary = require('./Data/keyPointDict_resize.json');
+const keyPointsDictionary = require('./Data/keyPointDict.json');
 export const SimplyDanceContainer = React.memo((props: RouteComponentProps<{ [key: string]: string }>) => {
   const [isRefVideoPlay, setisRefVideoPlay] = React.useState<boolean>(false);
   const videoWidth = 600;
@@ -151,19 +152,19 @@ export const SimplyDanceContainer = React.memo((props: RouteComponentProps<{ [ke
       // scores
       poses.forEach(({ score, keypoints }: any) => {
         if (score >= minPoseConfidence) {
-          if (keyIndexRef.current > -1 && keyIndexRef.current < newKeys.length) {
-            const refKeypoint = keyPointsDictionary[newKeys[keyIndexRef.current]];
+          if (keyIndexRef.current > 0 && keyIndexRef.current < newKeys.length) {
+            const refKeypoint = keyPointsDictionary[newKeys[keyIndexRef.current - 1]];
 
             var poseVector = createPoseVector(keypoints);
             var gtVector = refKeypoint ? createPoseVector(refKeypoint) : keypoints;
-            var similarityScore = cosineDistanceMatching(poseVector, gtVector);
-            console.log(similarityScore);
+            var similarityScore = cosineDistanceMatching(poseVector, gtVector, newKeys[keyIndexRef.current - 1]);
+            // console.log(similarityScore);
             if (similarityScore < defaultHardLevel) {
               //   console.log('sim score', poseVector, similarityScore);
               // gt_keypoints = JSON.parse(gtKeypointsList[gtKeypointsIdx]);
               // gtKeypointsIdx = (gtKeypointsIdx + 1) % gtKeypointsList.length;
               // console.log(gtKeypointsIdx);
-              refVideoPlayPauseToggle();
+              //   refVideoPlayPauseToggle();
             }
             drawKeypoints(refKeypoint, minPartConfidence, ctx);
             drawSkeleton(refKeypoint, minPartConfidence, ctx);
@@ -182,8 +183,8 @@ export const SimplyDanceContainer = React.memo((props: RouteComponentProps<{ [ke
               Number(newKeys[keyIndexRef.current]) * 50 - currentTime
             );
 
-            keyIndexRef.current++;
             refVideoPlayPauseToggle();
+            keyIndexRef.current++;
           }
           if (guiState.output.showPoints) {
             drawKeypoints(keypoints, minPartConfidence, ctx);
@@ -266,13 +267,14 @@ export const SimplyDanceContainer = React.memo((props: RouteComponentProps<{ [ke
     // );
   };
   const onVideoEnd = () => {
-    keyIndexRef.current = -1;
     refVideoPlayPauseToggle();
+    keyIndexRef.current = -1;
   };
   return (
     <div className="simply-dance-container" style={{ margin: '0 150px' }}>
       <img
-        src="https://cdn.pixabay.com/photo/2015/10/29/14/42/dance-1012474_960_720.jpg"
+        // src="https://cdn.pixabay.com/photo/2015/10/29/14/42/dance-1012474_960_720.jpg"
+        src="banner.png"
         className="banner"
         style={{ width: '1400px', height: '248px', margin: '0 100px' }}
       />

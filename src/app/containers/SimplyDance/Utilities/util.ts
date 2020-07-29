@@ -225,7 +225,10 @@ export function drawOffsetVectors(heatMapValues: any, offsets: any, outputStride
   }
 }
 
-export function cosineDistanceMatching(poseVector1: any, poseVector2: any) {
+export function cosineDistanceMatching(poseVector1: any, poseVector2: any, frame: string) {
+  if (poseVector1.length !== poseVector2.length) {
+    console.log(frame);
+  }
   let cosineSimilarity = similarity(poseVector1, poseVector2);
   // console.log(poseVector1, poseVector2, cosineSimilarity)
   cosineSimilarity = Math.min(1, cosineSimilarity);

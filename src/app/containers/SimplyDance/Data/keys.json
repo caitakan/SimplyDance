@@ -1,58 +1,11 @@
 [
   { "21": [] },
   { "42": [] },
-  { "59": [["rightElbow", "rightWrist"]] },
-  { "63": [["rightElbow", "rightWrist"]] },
-  { "64": [["rightElbow", "rightWrist"]] },
-  { "65": [["rightElbow", "rightWrist"]] },
-  { "73": [["rightElbow", "rightWrist"]] },
-  {
-    "77": [
-      ["rightElbow", "rightWrist"],
-      ["leftElbow", "leftWrist"]
-    ]
-  },
-  {
-    "78": [
-      ["rightShoulder", "rightElbow"],
-      ["leftElbow", "leftWrist"]
-    ]
-  },
-  {
-    "79": [
-      ["rightShoulder", "rightElbow"],
-      ["rightElbow", "rightWrist"]
-    ]
-  },
-  {
-    "82": [
-      ["rightEye", "rightEar"],
-      ["rightElbow", "rightWrist"]
-    ]
-  },
-  {
-    "93": [
-      ["rightShoulder", "rightElbow"],
-      ["rightElbow", "rightWrist"]
-    ]
-  },
-  {
-    "95": [
-      ["rightShoulder", "rightElbow"],
-      ["rightElbow", "rightWrist"]
-    ]
-  },
-  { "100": [["rightElbow", "rightWrist"]] },
-  { "109": [["rightElbow", "rightWrist"]] },
-  { "112": [["leftElbow", "leftWrist"]] },
-  {
-    "115": [
-      ["rightShoulder", "rightElbow"],
-      ["rightEye", "rightEar"]
-    ]
-  },
-  { "117": [["rightElbow", "rightWrist"]] },
-  { "119": [["rightElbow", "rightWrist"]] },
+  { "60": [["rightElbow", "rightWrist"]] },
+  { "74": [["rightElbow", "rightWrist"]] },
+  { "89": [["rightEye", "rightEar"]] },
+  { "110": [["rightElbow", "rightWrist"]] },
+  { "116": [["rightShoulder", "rightElbow"]] },
   {
     "128": [
       ["rightShoulder", "rightElbow"],
@@ -60,560 +13,67 @@
     ]
   },
   {
-    "131": [
-      ["rightElbow", "rightWrist"],
-      ["leftElbow", "leftWrist"]
-    ]
-  },
-  { "136": [["leftElbow", "leftWrist"]] },
-  { "138": [["leftEye", "leftEar"]] },
-  {
-    "139": [
-      ["leftEye", "leftEar"],
+    "154": [
       ["rightShoulder", "rightElbow"],
       ["leftElbow", "leftWrist"]
     ]
   },
+  { "166": [["nose", "leftEye"]] },
+  { "190": [] },
   {
-    "151": [
-      ["rightShoulder", "rightElbow"],
+    "250": [
+      ["rightElbow", "rightWrist"],
+      ["leftElbow", "leftWrist"]
+    ]
+  },
+  { "283": [["rightElbow", "rightWrist"]] },
+  { "297": [["leftElbow", "leftWrist"]] },
+  {
+    "312": [
+      ["rightElbow", "rightWrist"],
+      ["leftElbow", "leftWrist"]
+    ]
+  },
+  { "323": [["leftElbow", "leftWrist"]] },
+  { "336": [["rightElbow", "rightWrist"]] },
+  {
+    "344": [
       ["leftShoulder", "leftElbow"],
       ["leftElbow", "leftWrist"]
-    ]
-  },
-  {
-    "153": [
-      ["rightShoulder", "rightElbow"],
-      ["leftElbow", "leftWrist"]
-    ]
-  },
-  { "154": [["leftElbow", "leftWrist"]] },
-  { "155": [["rightElbow", "rightWrist"]] },
-  {
-    "157": [
-      ["rightElbow", "rightWrist"],
-      ["leftShoulder", "leftElbow"]
-    ]
-  },
-  {
-    "169": [
-      ["rightShoulder", "rightElbow"],
-      ["rightElbow", "rightWrist"],
-      ["leftShoulder", "leftElbow"]
-    ]
-  },
-  {
-    "175": [
-      ["nose", "leftEye"],
-      ["rightShoulder", "rightElbow"]
-    ]
-  },
-  {
-    "186": [
-      ["nose", "leftEye"],
-      ["leftElbow", "leftWrist"],
-      ["rightShoulder", "rightElbow"]
-    ]
-  },
-  {
-    "187": [
-      ["nose", "leftEye"],
-      ["leftEye", "leftEar"],
-      ["nose", "leftShoulder"],
-      ["leftElbow", "leftWrist"],
-      ["rightShoulder", "rightElbow"]
-    ]
-  },
-  {
-    "188": [
-      ["nose", "leftEye"],
-      ["rightShoulder", "rightElbow"]
-    ]
-  },
-  {
-    "189": [
-      ["leftEye", "leftEar"],
-      ["rightShoulder", "rightElbow"]
-    ]
-  },
-  {
-    "190": [
-      ["nose", "leftEye"],
-      ["leftEye", "leftEar"],
-      ["rightShoulder", "rightElbow"]
-    ]
-  },
-  {
-    "192": [
-      ["nose", "leftEye"],
-      ["leftEye", "leftEar"],
-      ["rightShoulder", "rightElbow"],
-      ["rightElbow", "rightWrist"]
-    ]
-  },
-  {
-    "193": [
-      ["leftEye", "leftEar"],
-      ["nose", "leftShoulder"],
-      ["leftShoulder", "leftElbow"],
-      ["rightShoulder", "rightElbow"]
-    ]
-  },
-  {
-    "195": [
-      ["leftEye", "leftEar"],
-      ["rightEye", "rightEar"],
-      ["leftElbow", "leftWrist"],
-      ["rightElbow", "rightWrist"]
-    ]
-  },
-  {
-    "196": [
-      ["rightElbow", "rightWrist"],
-      ["leftElbow", "leftWrist"]
-    ]
-  },
-  { "199": [["rightElbow", "rightWrist"]] },
-  { "200": [["rightElbow", "rightWrist"]] },
-  { "205": [["leftElbow", "leftWrist"]] },
-  { "207": [["leftElbow", "leftWrist"]] },
-  {
-    "209": [
-      ["rightElbow", "rightWrist"],
-      ["leftElbow", "leftWrist"]
-    ]
-  },
-  { "210": [["rightElbow", "rightWrist"]] },
-  { "211": [["rightElbow", "rightWrist"]] },
-  { "212": [["rightElbow", "rightWrist"]] },
-  {
-    "213": [
-      ["rightElbow", "rightWrist"],
-      ["leftElbow", "leftWrist"]
-    ]
-  },
-  { "216": [["leftElbow", "leftWrist"]] },
-  { "217": [["leftElbow", "leftWrist"]] },
-  { "218": [["leftElbow", "leftWrist"]] },
-  { "219": [["leftElbow", "leftWrist"]] },
-  { "223": [["rightElbow", "rightWrist"]] },
-  { "225": [["rightElbow", "rightWrist"]] },
-  {
-    "227": [
-      ["rightElbow", "rightWrist"],
-      ["leftElbow", "leftWrist"]
-    ]
-  },
-  { "229": [["leftElbow", "leftWrist"]] },
-  { "230": [["leftElbow", "leftWrist"]] },
-  {
-    "232": [
-      ["rightElbow", "rightWrist"],
-      ["leftElbow", "leftWrist"]
-    ]
-  },
-  {
-    "233": [
-      ["rightElbow", "rightWrist"],
-      ["leftElbow", "leftWrist"]
-    ]
-  },
-  {
-    "234": [
-      ["rightElbow", "rightWrist"],
-      ["leftElbow", "leftWrist"]
-    ]
-  },
-  {
-    "235": [
-      ["rightElbow", "rightWrist"],
-      ["leftElbow", "leftWrist"]
-    ]
-  },
-  {
-    "236": [
-      ["rightElbow", "rightWrist"],
-      ["leftElbow", "leftWrist"]
-    ]
-  },
-  {
-    "237": [
-      ["rightElbow", "rightWrist"],
-      ["leftElbow", "leftWrist"]
-    ]
-  },
-  {
-    "241": [
-      ["rightElbow", "rightWrist"],
-      ["leftElbow", "leftWrist"]
-    ]
-  },
-  {
-    "243": [
-      ["rightElbow", "rightWrist"],
-      ["leftElbow", "leftWrist"]
-    ]
-  },
-  {
-    "249": [
-      ["rightElbow", "rightWrist"],
-      ["leftElbow", "leftWrist"]
-    ]
-  },
-  {
-    "251": [
-      ["rightElbow", "rightWrist"],
-      ["leftElbow", "leftWrist"]
-    ]
-  },
-  { "252": [["rightElbow", "rightWrist"]] },
-  {
-    "253": [
-      ["rightElbow", "rightWrist"],
-      ["leftElbow", "leftWrist"]
-    ]
-  },
-  {
-    "257": [
-      ["rightElbow", "rightWrist"],
-      ["leftElbow", "leftWrist"]
-    ]
-  },
-  {
-    "258": [
-      ["rightElbow", "rightWrist"],
-      ["leftElbow", "leftWrist"]
-    ]
-  },
-  {
-    "259": [
-      ["rightElbow", "rightWrist"],
-      ["leftElbow", "leftWrist"]
-    ]
-  },
-  { "260": [["leftElbow", "leftWrist"]] },
-  {
-    "261": [
-      ["rightElbow", "rightWrist"],
-      ["leftElbow", "leftWrist"]
-    ]
-  },
-  {
-    "262": [
-      ["rightElbow", "rightWrist"],
-      ["leftElbow", "leftWrist"]
-    ]
-  },
-  {
-    "263": [
-      ["rightElbow", "rightWrist"],
-      ["leftElbow", "leftWrist"]
-    ]
-  },
-  {
-    "265": [
-      ["leftElbow", "leftWrist"],
-      ["rightKnee", "rightAnkle"]
-    ]
-  },
-  {
-    "267": [
-      ["nose", "leftShoulder"],
-      ["leftElbow", "leftWrist"],
-      ["rightElbow", "rightWrist"],
-      ["rightKnee", "rightAnkle"]
-    ]
-  },
-  {
-    "268": [
-      ["nose", "leftEye"],
-      ["leftEye", "leftEar"],
-      ["nose", "leftShoulder"],
-      ["rightElbow", "rightWrist"]
-    ]
-  },
-  {
-    "269": [
-      ["nose", "leftEye"],
-      ["leftEye", "leftEar"],
-      ["rightElbow", "rightWrist"],
-      ["rightKnee", "rightAnkle"]
-    ]
-  },
-  {
-    "271": [
-      ["leftEye", "leftEar"],
-      ["rightKnee", "rightAnkle"]
-    ]
-  },
-  {
-    "273": [
-      ["nose", "leftEye"],
-      ["leftEye", "leftEar"],
-      ["nose", "leftShoulder"],
-      ["rightElbow", "rightWrist"],
-      ["rightKnee", "rightAnkle"]
-    ]
-  },
-  { "274": [["rightElbow", "rightWrist"]] },
-  { "282": [["rightElbow", "rightWrist"]] },
-  {
-    "283": [
-      ["rightElbow", "rightWrist"],
-      ["leftElbow", "leftWrist"]
-    ]
-  },
-  { "288": [["leftElbow", "leftWrist"]] },
-  {
-    "289": [
-      ["rightElbow", "rightWrist"],
-      ["leftElbow", "leftWrist"]
-    ]
-  },
-  {
-    "290": [
-      ["rightElbow", "rightWrist"],
-      ["leftElbow", "leftWrist"]
-    ]
-  },
-  { "296": [["leftElbow", "leftWrist"]] },
-  {
-    "297": [
-      ["leftShoulder", "leftElbow"],
-      ["leftElbow", "leftWrist"]
-    ]
-  },
-  {
-    "299": [
-      ["rightEye", "rightEar"],
-      ["leftShoulder", "leftElbow"],
-      ["leftElbow", "leftWrist"],
-      ["nose", "rightShoulder"]
-    ]
-  },
-  {
-    "300": [
-      ["nose", "rightEye"],
-      ["rightEye", "rightEar"],
-      ["leftElbow", "leftWrist"],
-      ["nose", "rightShoulder"],
-      ["rightShoulder", "rightElbow"],
-      ["rightElbow", "rightWrist"]
-    ]
-  },
-  {
-    "301": [
-      ["nose", "leftEye"],
-      ["nose", "rightEye"],
-      ["rightEye", "rightEar"],
-      ["leftShoulder", "leftElbow"],
-      ["leftElbow", "leftWrist"],
-      ["nose", "rightShoulder"],
-      ["rightShoulder", "rightElbow"],
-      ["rightElbow", "rightWrist"]
-    ]
-  },
-  {
-    "302": [
-      ["nose", "leftEye"],
-      ["leftEye", "leftEar"],
-      ["rightEye", "rightEar"],
-      ["nose", "leftShoulder"],
-      ["leftShoulder", "leftElbow"],
-      ["leftElbow", "leftWrist"],
-      ["nose", "rightShoulder"],
-      ["rightShoulder", "rightElbow"],
-      ["rightElbow", "rightWrist"]
-    ]
-  },
-  {
-    "303": [
-      ["nose", "leftEye"],
-      ["leftEye", "leftEar"],
-      ["nose", "rightEye"],
-      ["nose", "leftShoulder"],
-      ["leftShoulder", "leftElbow"],
-      ["leftElbow", "leftWrist"],
-      ["nose", "rightShoulder"],
-      ["rightElbow", "rightWrist"]
-    ]
-  },
-  {
-    "304": [
-      ["leftEye", "leftEar"],
-      ["nose", "rightEye"],
-      ["rightEye", "rightEar"],
-      ["leftShoulder", "leftElbow"],
-      ["leftElbow", "leftWrist"],
-      ["nose", "rightShoulder"],
-      ["rightElbow", "rightWrist"]
-    ]
-  },
-  {
-    "305": [
-      ["nose", "leftEye"],
-      ["leftEye", "leftEar"],
-      ["nose", "rightEye"],
-      ["nose", "leftShoulder"],
-      ["leftShoulder", "leftElbow"],
-      ["leftElbow", "leftWrist"],
-      ["rightShoulder", "rightElbow"],
-      ["rightElbow", "rightWrist"]
-    ]
-  },
-  {
-    "306": [
-      ["nose", "leftEye"],
-      ["leftEye", "leftEar"],
-      ["rightEye", "rightEar"],
-      ["rightElbow", "rightWrist"]
-    ]
-  },
-  {
-    "311": [
-      ["rightElbow", "rightWrist"],
-      ["leftElbow", "leftWrist"]
-    ]
-  },
-  { "329": [["rightElbow", "rightWrist"]] },
-  {
-    "335": [
-      ["rightElbow", "rightWrist"],
-      ["leftElbow", "leftWrist"]
-    ]
-  },
-  {
-    "336": [
-      ["rightElbow", "rightWrist"],
-      ["leftElbow", "leftWrist"]
-    ]
-  },
-  { "341": [["leftShoulder", "leftElbow"]] },
-  { "342": [["leftElbow", "leftWrist"]] },
-  { "343": [["leftElbow", "leftWrist"]] },
-  { "346": [["leftElbow", "leftWrist"]] },
-  {
-    "349": [
-      ["rightEye", "rightEar"],
-      ["leftShoulder", "leftElbow"]
-    ]
-  },
-  {
-    "351": [
-      ["nose", "rightShoulder"],
-      ["leftShoulder", "leftElbow"]
-    ]
-  },
-  { "352": [["leftShoulder", "leftElbow"]] },
-  {
-    "355": [
-      ["nose", "rightEye"],
-      ["rightEye", "rightEar"],
-      ["leftShoulder", "leftElbow"],
-      ["leftElbow", "leftWrist"],
-      ["nose", "rightShoulder"]
     ]
   },
   {
     "356": [
-      ["leftEye", "leftEar"],
+      ["nose", "rightEye"],
       ["rightEye", "rightEar"],
-      ["leftElbow", "leftWrist"]
-    ]
-  },
-  {
-    "357": [
-      ["rightEye", "rightEar"],
-      ["leftElbow", "leftWrist"],
+      ["leftShoulder", "leftElbow"],
       ["nose", "rightShoulder"],
-      ["rightElbow", "rightWrist"]
+      ["rightShoulder", "rightElbow"]
     ]
   },
   {
-    "363": [
-      ["rightShoulder", "rightElbow"],
-      ["rightElbow", "rightWrist"]
-    ]
-  },
-  {
-    "364": [
+    "366": [
       ["leftEye", "leftEar"],
-      ["rightShoulder", "rightElbow"],
-      ["rightElbow", "rightWrist"]
+      ["rightShoulder", "rightElbow"]
     ]
   },
-  { "368": [["leftEye", "leftEar"]] },
-  { "369": [["rightShoulder", "rightElbow"]] },
+  { "373": [["rightElbow", "rightWrist"]] },
+  { "392": [["leftEye", "leftEar"]] },
   {
-    "375": [
-      ["rightElbow", "rightWrist"],
-      ["leftElbow", "leftWrist"]
-    ]
-  },
-  {
-    "387": [
-      ["leftEye", "leftEar"],
-      ["rightEye", "rightEar"],
-      ["nose", "leftShoulder"],
-      ["rightShoulder", "rightElbow"],
-      ["rightElbow", "rightWrist"]
-    ]
-  },
-  {
-    "388": [
-      ["nose", "leftEye"],
-      ["leftEye", "leftEar"],
-      ["nose", "leftShoulder"],
-      ["leftElbow", "leftWrist"],
-      ["rightElbow", "rightWrist"]
-    ]
-  },
-  {
-    "392": [
-      ["nose", "leftEye"],
-      ["leftEye", "leftEar"],
-      ["leftElbow", "leftWrist"]
-    ]
-  },
-  {
-    "393": [
-      ["nose", "leftEye"],
-      ["leftEye", "leftEar"],
-      ["nose", "leftShoulder"],
-      ["leftElbow", "leftWrist"]
-    ]
-  },
-  { "397": [["leftElbow", "leftWrist"]] },
-  { "399": [["leftShoulder", "leftElbow"]] },
-  { "403": [["leftShoulder", "leftElbow"]] },
-  {
-    "405": [
+    "399": [
       ["leftShoulder", "leftElbow"],
       ["leftElbow", "leftWrist"]
     ]
   },
   {
-    "413": [
-      ["leftElbow", "leftWrist"],
-      ["rightShoulder", "rightElbow"],
-      ["rightElbow", "rightWrist"]
-    ]
-  },
-  {
-    "414": [
-      ["rightElbow", "rightWrist"],
+    "406": [
+      ["leftShoulder", "leftElbow"],
       ["leftElbow", "leftWrist"]
     ]
   },
   {
-    "417": [
+    "416": [
       ["rightElbow", "rightWrist"],
-      ["leftElbow", "leftWrist"]
-    ]
-  },
-  {
-    "423": [
-      ["rightShoulder", "rightElbow"],
       ["leftElbow", "leftWrist"]
     ]
   },
@@ -625,174 +85,59 @@
     ]
   },
   {
-    "429": [
-      ["rightElbow", "rightWrist"],
-      ["leftElbow", "leftWrist"]
-    ]
-  },
-  {
-    "431": [
-      ["rightElbow", "rightWrist"],
-      ["leftShoulder", "leftElbow"],
-      ["leftElbow", "leftWrist"]
-    ]
-  },
-  { "439": [["leftShoulder", "leftElbow"]] },
-  {
     "440": [
-      ["rightElbow", "rightWrist"],
-      ["leftShoulder", "leftElbow"]
-    ]
-  },
-  {
-    "441": [
-      ["leftShoulder", "leftElbow"],
-      ["leftElbow", "leftWrist"],
-      ["rightElbow", "rightWrist"]
-    ]
-  },
-  { "445": [["leftElbow", "leftWrist"]] },
-  {
-    "447": [
-      ["rightElbow", "rightWrist"],
-      ["leftElbow", "leftWrist"]
-    ]
-  },
-  { "460": [["nose", "rightEye"]] },
-  { "461": [["nose", "rightEye"]] },
-  { "467": [["nose", "rightEye"]] },
-  {
-    "469": [
-      ["rightShoulder", "rightElbow"],
-      ["leftShoulder", "leftElbow"],
-      ["leftElbow", "leftWrist"]
-    ]
-  },
-  {
-    "471": [
       ["rightShoulder", "rightElbow"],
       ["leftShoulder", "leftElbow"]
+    ]
+  },
+  {
+    "462": [
+      ["nose", "leftEye"],
+      ["nose", "rightEye"]
     ]
   },
   {
     "472": [
-      ["leftShoulder", "leftElbow"],
-      ["leftElbow", "leftWrist"]
+      ["rightShoulder", "rightElbow"],
+      ["leftShoulder", "leftElbow"]
     ]
   },
   {
-    "473": [
-      ["leftShoulder", "leftElbow"],
-      ["leftElbow", "leftWrist"],
+    "492": [
+      ["rightElbow", "rightWrist"],
+      ["leftElbow", "leftWrist"]
+    ]
+  },
+  { "519": [] },
+  {
+    "526": [
+      ["leftEye", "leftEar"],
       ["rightShoulder", "rightElbow"],
       ["rightElbow", "rightWrist"]
     ]
   },
+  { "548": [] },
+  { "559": [["rightElbow", "rightWrist"]] },
   {
-    "491": [
-      ["rightElbow", "rightWrist"],
-      ["leftElbow", "leftWrist"]
-    ]
-  },
-  { "495": [["rightEye", "rightEar"]] },
-  {
-    "497": [
-      ["rightElbow", "rightWrist"],
-      ["leftElbow", "leftWrist"]
-    ]
-  },
-  {
-    "509": [
-      ["leftElbow", "leftWrist"],
-      ["rightElbow", "rightWrist"],
-      ["rightHip", "rightKnee"]
-    ]
-  },
-  {
-    "511": [
-      ["leftHip", "leftKnee"],
-      ["rightElbow", "rightWrist"],
-      ["leftElbow", "leftWrist"]
-    ]
-  },
-  { "515": [["rightShoulder", "rightElbow"]] },
-  {
-    "516": [
-      ["nose", "leftEye"],
-      ["leftEye", "leftEar"],
-      ["leftShoulder", "leftElbow"],
+    "576": [
       ["rightShoulder", "rightElbow"],
-      ["rightElbow", "rightWrist"],
-      ["rightKnee", "rightAnkle"]
-    ]
-  },
-  {
-    "517": [
-      ["leftEye", "leftEar"],
-      ["rightShoulder", "rightElbow"],
-      ["rightElbow", "rightWrist"],
-      ["leftKnee", "leftAnkle"]
-    ]
-  },
-  { "520": [["rightElbow", "rightWrist"]] },
-  {
-    "525": [
-      ["rightShoulder", "rightElbow"],
-      ["rightElbow", "rightWrist"]
-    ]
-  },
-  {
-    "529": [
-      ["rightShoulder", "rightElbow"],
-      ["rightElbow", "rightWrist"],
-      ["leftElbow", "leftWrist"]
-    ]
-  },
-  {
-    "531": [
-      ["rightShoulder", "rightElbow"],
-      ["rightElbow", "rightWrist"],
-      ["leftElbow", "leftWrist"]
-    ]
-  },
-  {
-    "533": [
-      ["rightShoulder", "rightElbow"],
-      ["rightElbow", "rightWrist"],
-      ["leftElbow", "leftWrist"]
-    ]
-  },
-  { "554": [] },
-  { "558": [["rightElbow", "rightWrist"]] },
-  { "561": [["leftElbow", "leftWrist"]] },
-  {
-    "562": [
-      ["leftEye", "leftEar"],
-      ["leftElbow", "leftWrist"]
-    ]
-  },
-  { "564": [["leftElbow", "leftWrist"]] },
-  { "571": [["leftElbow", "leftWrist"]] },
-  { "572": [["leftElbow", "leftWrist"]] },
-  {
-    "586": [
-      ["leftShoulder", "leftElbow"],
-      ["leftElbow", "leftWrist"],
-      ["rightShoulder", "rightElbow"]
-    ]
-  },
-  {
-    "588": [
-      ["leftShoulder", "leftElbow"],
-      ["leftElbow", "leftWrist"],
-      ["rightShoulder", "rightElbow"],
-      ["rightElbow", "rightWrist"]
+      ["leftShoulder", "leftElbow"]
     ]
   },
   {
     "589": [
-      ["rightElbow", "rightWrist"],
+      ["rightShoulder", "rightElbow"],
+      ["leftShoulder", "leftElbow"],
       ["leftElbow", "leftWrist"]
+    ]
+  },
+  { "611": [] },
+  { "632": [] },
+  { "653": [] },
+  {
+    "664": [
+      ["leftEye", "leftEar"],
+      ["rightElbow", "rightWrist"]
     ]
   }
 ]
