@@ -10,7 +10,7 @@ import {
   cosineDistanceMatching
 } from './Utilities/util';
 const keysData = require('./Data/keys.json');
-const keyPointsDictionary = require('./Data/keyPointDict.json');
+const keyPointsDictionary = require('./Data/keyPointDict_resize.json');
 export const SimplyDanceContainer = React.memo((props: RouteComponentProps<{ [key: string]: string }>) => {
   const isExerciseMode = props.match.params['mode'] === 'exercise';
   const [isRefVideoPlay, setisRefVideoPlay] = React.useState<boolean>(false);
@@ -22,6 +22,7 @@ export const SimplyDanceContainer = React.memo((props: RouteComponentProps<{ [ke
   const defaultMobileNetInputResolution = 500;
   const defaultHardLevel = React.useRef(0.35);
   const [defaultdifficulty, setdefaultdifficulty] = React.useState<number>(0.35);
+  const [resetScore, setresetScore] = React.useState<boolean>(false);
   const keys: string[] = keysData.map((key: any) => Object.keys(key)[0]);
   let j = 0;
   const newKeys = [keys[0]];
@@ -157,12 +158,12 @@ export const SimplyDanceContainer = React.memo((props: RouteComponentProps<{ [ke
       poses.forEach(({ score, keypoints }: any) => {
         if (score >= minPoseConfidence) {
           const currentTime = Math.ceil(playerRef.current.getCurrentTime() * 1000);
-          console.log(
-            keyIndexRef.current,
-            currentTime,
-            newKeys[keyIndexRef.current],
-            Number(newKeys[keyIndexRef.current]) * 50 - currentTime
-          );
+          //   console.log(
+          //     keyIndexRef.current,
+          //     currentTime,
+          //     newKeys[keyIndexRef.current],
+          //     Number(newKeys[keyIndexRef.current]) * 50 - currentTime
+          //   );
           if (keyIndexRef.current > 0 && keyIndexRef.current <= newKeys.length) {
             const refKeypoint = keyPointsDictionary[newKeys[keyIndexRef.current - 1]];
 
@@ -255,6 +256,11 @@ export const SimplyDanceContainer = React.memo((props: RouteComponentProps<{ [ke
   };
   const overRideRef = React.useRef(false);
   const refVideoPlayPauseToggle = async () => {
+    if (resetScore) {
+      setresetScore(false);
+      scoreRef.current = 0;
+      setscore(scoreRef.current);
+    }
     if (keyIndexRef.current === -1) {
       keyIndexRef.current = 0;
     }
@@ -278,10 +284,10 @@ export const SimplyDanceContainer = React.memo((props: RouteComponentProps<{ [ke
   const onVideoStart = () => {
     keyIndexRef.current = 0;
   };
-
   const onVideoEnd = () => {
     refVideoPlayPauseToggle();
     keyIndexRef.current = -1;
+    setresetScore(true);
   };
   const onEasyClick = () => {
     defaultHardLevel.current = 0.5;

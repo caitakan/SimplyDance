@@ -229,14 +229,14 @@ export function cosineDistanceMatching(poseVector1: any, poseVector2: any, frame
   if (poseVector1.length !== poseVector2.length) {
     console.log(frame);
   }
-  var pv1 = []
-  var pv2 = []
+  var pv1 = [];
+  var pv2 = [];
   for (let i = 0; i < 13; i++) {
-    if (poseVector2[26+i] > 0.75) {
-      pv1.push(poseVector1[2*i]);
-      pv1.push(poseVector1[2*i+1]);
-      pv2.push(poseVector2[2*i]);
-      pv2.push(poseVector2[2*i+1]);
+    if (poseVector2[26 + i] > 0.75) {
+      pv1.push(poseVector1[2 * i]);
+      pv1.push(poseVector1[2 * i + 1]);
+      pv2.push(poseVector2[2 * i]);
+      pv2.push(poseVector2[2 * i + 1]);
     } else {
       pv1.push(0);
       pv1.push(0);
@@ -248,14 +248,14 @@ export function cosineDistanceMatching(poseVector1: any, poseVector2: any, frame
   // console.log(poseVector1, poseVector2, cosineSimilarity)
   cosineSimilarity = Math.min(1, cosineSimilarity);
   let distance = 2 * (1 - cosineSimilarity);
-  console.log(Math.sqrt(distance));
+  // console.log(Math.sqrt(distance));
   return Math.sqrt(distance);
 }
 
 export function createPoseVector(keypoints: any) {
   var keypoints_arr = [];
   var scores_arr = [];
-  for (let i = 0; i < keypoints.length-4; i++) {
+  for (let i = 0; i < keypoints.length - 4; i++) {
     const keypoint = keypoints[i];
     keypoints_arr.push(keypoint.position.x);
     keypoints_arr.push(keypoint.position.y);
