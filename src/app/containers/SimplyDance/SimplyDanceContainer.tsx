@@ -186,8 +186,8 @@ export const SimplyDanceContainer = React.memo((props: RouteComponentProps<{ [ke
           }
 
           if (
-            currentTime - 1000 < timeStamps[keyIndexRef.current] &&
-            timeStamps[keyIndexRef.current] < currentTime + 1000
+            currentTime - 35 < timeStamps[keyIndexRef.current] &&
+            timeStamps[keyIndexRef.current] < currentTime + 35
           ) {
             if (isExerciseMode) {
               console.log(
