@@ -13,7 +13,41 @@
       align-items: center;
       height: 98vh;
     }
-    .start-button {
+    .change-mode {
+      position: fixed;
+      left: 64px;
+    }
+    .difficulty-container {
+      position: fixed;
+      right: 64px;
+      display: flex;
+      flex-direction: column;
+    }
+    .difficulty-container .difficulty-button,
+    .simply-dance-container .change-mode {
+      height: 100px;
+      margin: 10px;
+      width: 100px;
+      font-size: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .home-page-button-container {
+      display: flex;
+      height: 98vh;
+      align-items: center;
+      justify-content: center;
+    }
+    .mode-button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .mode-button,
+    .start-button,
+    .change-mode,
+    .difficulty-button {
       width: 160px;
       height: 160px;
       margin: auto 20px;
@@ -26,7 +60,12 @@
       transition: all 0.4s ease 0s;
       color: #63747d;
     }
-    .start-button:hover {
+    .mode-button:hover,
+    .change-mode:hover,
+    .difficulty-button:hover,
+    .start-button:hover,
+    .selected {
+      cursor: pointer;
       text-shadow: 0px 0px 6px rgba(255, 255, 255, 1);
       box-shadow: navy 7px 5px 20px;
       transition: all 0.4s ease 0s;

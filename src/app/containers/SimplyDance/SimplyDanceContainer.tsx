@@ -10,9 +10,9 @@ import {
   cosineDistanceMatching
 } from './Utilities/util';
 const keysData = require('./Data/keys.json');
-// const keyPointsDictionary = require('./Data/keyPointDict_resize.json');
 const keyPointsDictionary = require('./Data/keyPointDict.json');
 export const SimplyDanceContainer = React.memo((props: RouteComponentProps<{ [key: string]: string }>) => {
+  const isExerciseMode = props.match.params['mode'] === 'exercise';
   const [isRefVideoPlay, setisRefVideoPlay] = React.useState<boolean>(false);
   const videoWidth = 600;
   const videoHeight = 500;
@@ -20,7 +20,8 @@ export const SimplyDanceContainer = React.memo((props: RouteComponentProps<{ [ke
   const defaultMobileNetMultiplier = 0.75;
   const defaultMobileNetStride = 16;
   const defaultMobileNetInputResolution = 500;
-  const defaultHardLevel = 0.35;
+  const defaultHardLevel = React.useRef(0.5);
+  const [defaultdifficulty, setdefaultdifficulty] = React.useState<number>(0.5);
   const keys: string[] = keysData.map((key: any) => Object.keys(key)[0]);
   let j = 0;
   const newKeys = [keys[0]];
@@ -33,7 +34,6 @@ export const SimplyDanceContainer = React.memo((props: RouteComponentProps<{ [ke
   });
   const isPlayRef = React.useRef(false);
   const timeStamps: number[] = newKeys.map((key: any) => Number(key) * 50);
-  //   let timeStampIndex = 0;
   const guiState = {
     algorithm: 'single-pose',
     input: {
@@ -95,6 +95,8 @@ export const SimplyDanceContainer = React.memo((props: RouteComponentProps<{ [ke
     return video;
   }
   const keyIndexRef = React.useRef(-1);
+  const startTimeRef = React.useRef(undefined as any);
+  const showSkeletonRef = React.useRef(false);
   function detectPoseInRealTime(video: any, net: posenet.PoseNet) {
     const canvas = document.getElementById('output') as HTMLCanvasElement;
     const ctx = canvas.getContext('2d') as any;
@@ -152,22 +154,24 @@ export const SimplyDanceContainer = React.memo((props: RouteComponentProps<{ [ke
       // scores
       poses.forEach(({ score, keypoints }: any) => {
         if (score >= minPoseConfidence) {
-          if (keyIndexRef.current > 0 && keyIndexRef.current < newKeys.length) {
+          if (keyIndexRef.current > 0 && keyIndexRef.current <= newKeys.length) {
             const refKeypoint = keyPointsDictionary[newKeys[keyIndexRef.current - 1]];
 
             var poseVector = createPoseVector(keypoints);
             var gtVector = refKeypoint ? createPoseVector(refKeypoint) : keypoints;
             var similarityScore = cosineDistanceMatching(poseVector, gtVector, newKeys[keyIndexRef.current - 1]);
             // console.log(similarityScore);
-            if (similarityScore < defaultHardLevel) {
-              //   console.log('sim score', poseVector, similarityScore);
-              // gt_keypoints = JSON.parse(gtKeypointsList[gtKeypointsIdx]);
-              // gtKeypointsIdx = (gtKeypointsIdx + 1) % gtKeypointsList.length;
-              // console.log(gtKeypointsIdx);
-              //   refVideoPlayPauseToggle();
+            if (similarityScore < defaultHardLevel.current) {
+              console.log('sim score', poseVector, similarityScore);
+              overRideRef.current = true;
+              showSkeletonRef.current = false;
+              refVideoPlayPauseToggle();
             }
-            drawKeypoints(refKeypoint, minPartConfidence, ctx);
-            drawSkeleton(refKeypoint, minPartConfidence, ctx);
+            if (Date.now() - startTimeRef.current >= 2000 && showSkeletonRef.current) {
+              drawKeypoints(refKeypoint, minPartConfidence, ctx);
+              drawSkeleton(refKeypoint, minPartConfidence, ctx);
+            }
+
             drawBoundingBox(refKeypoint, ctx);
           }
           const currentTime = Math.ceil(playerRef.current.getCurrentTime() * 1000);
@@ -176,14 +180,17 @@ export const SimplyDanceContainer = React.memo((props: RouteComponentProps<{ [ke
             currentTime - 35 < timeStamps[keyIndexRef.current] &&
             timeStamps[keyIndexRef.current] < currentTime + 35
           ) {
-            console.log(
-              keyIndexRef.current,
-              currentTime,
-              newKeys[keyIndexRef.current],
-              Number(newKeys[keyIndexRef.current]) * 50 - currentTime
-            );
-
-            refVideoPlayPauseToggle();
+            if (isExerciseMode) {
+              console.log(
+                keyIndexRef.current,
+                currentTime,
+                newKeys[keyIndexRef.current],
+                Number(newKeys[keyIndexRef.current]) * 50 - currentTime
+              );
+              startTimeRef.current = Date.now();
+              showSkeletonRef.current = true;
+              refVideoPlayPauseToggle();
+            }
             keyIndexRef.current++;
           }
           if (guiState.output.showPoints) {
@@ -203,16 +210,6 @@ export const SimplyDanceContainer = React.memo((props: RouteComponentProps<{ [ke
 
     poseDetectionFrame();
   }
-
-  //   async function estimatePoseOnImage(imageElement: any) {
-  //     // load the posenet model from a checkpoint
-  //     const net = await posenet.load();
-
-  //     const pose = await net.estimateSinglePose(imageElement, {
-  //       flipHorizontal: false
-  //     });
-  //     return pose;
-  //   }
 
   async function bindPage() {
     const net = await posenet.load({ architecture: 'ResNet50' } as any);
@@ -234,49 +231,67 @@ export const SimplyDanceContainer = React.memo((props: RouteComponentProps<{ [ke
   const setPlayerRef = (player: ReactPlayer) => {
     playerRef.current = player;
   };
-
+  const overRideRef = React.useRef(false);
   const refVideoPlayPauseToggle = async () => {
-    // const imageElement = document.getElementById('userVideo') as any;
-    // const pose = await estimatePoseOnImage(imageElement);
-    // console.log(pose);
-    // const refVideo = document.getElementById('refVideo') as any;
-    // console.log(playerRef.current.getCurrentTime());
     if (keyIndexRef.current === -1) {
       keyIndexRef.current = 0;
     }
-    if (isPlayRef.current) {
-      //   refVideo.pause();
-      setisRefVideoPlay(false);
-      isPlayRef.current = false;
-    } else {
-      //   refVideo.play();
+    if (overRideRef.current) {
       setisRefVideoPlay(true);
       isPlayRef.current = true;
+      overRideRef.current = false;
+    } else {
+      if (isPlayRef.current) {
+        //   refVideo.pause();
+        setisRefVideoPlay(false);
+        isPlayRef.current = false;
+      } else {
+        //   refVideo.play();
+        setisRefVideoPlay(true);
+        isPlayRef.current = true;
+      }
     }
   };
 
   const onVideoStart = () => {
     keyIndexRef.current = 0;
   };
-  const onVideoPause = () => {
-    // console.log(
-    //   keyIndexRef.current - 1,
-    //   Math.ceil(playerRef.current.getCurrentTime() * 1000),
-    //   newKeys[keyIndexRef.current - 1],
-    //   Number(newKeys[keyIndexRef.current - 1]) * 50 - playerRef.current.getCurrentTime() * 1000
-    // );
-  };
+
   const onVideoEnd = () => {
     refVideoPlayPauseToggle();
     keyIndexRef.current = -1;
   };
+  const onEasyClick = () => {
+    defaultHardLevel.current = 0.5;
+    setdefaultdifficulty(0.5);
+  };
+  const onNormalClick = () => {
+    defaultHardLevel.current = 0.4;
+    setdefaultdifficulty(0.4);
+  };
+  const onHardClick = () => {
+    defaultHardLevel.current = 0.3;
+    setdefaultdifficulty(0.3);
+  };
+  const onChangeModeClick = () => {
+    props.history.push('/');
+  };
   return (
     <div className="simply-dance-container">
-      {/* <img
-        src="https://cdn.pixabay.com/photo/2015/10/29/14/42/dance-1012474_960_720.jpg"
-        className="banner"
-        style={{ width: '1400px', height: '248px', margin: '0 100px' }}
-      /> */}
+      <div className="difficulty-container">
+        <button className="difficulty-button" style={{ marginBottom: 50 }} onClick={onChangeModeClick}>
+          Change Mode
+        </button>
+        <button className={`difficulty-button${defaultdifficulty === 0.5 ? ' selected' : ''}`} onClick={onEasyClick}>
+          Easy
+        </button>
+        <button className={`difficulty-button${defaultdifficulty === 0.4 ? ' selected' : ''}`} onClick={onNormalClick}>
+          Normal
+        </button>
+        <button className={`difficulty-button${defaultdifficulty === 0.3 ? ' selected' : ''}`} onClick={onHardClick}>
+          Hard
+        </button>
+      </div>
       <div className="two-video-container" style={{ display: 'flex', margin: '20px 100px' }}>
         <ReactPlayer
           ref={setPlayerRef}
@@ -290,7 +305,6 @@ export const SimplyDanceContainer = React.memo((props: RouteComponentProps<{ [ke
           }}
           onClick={null}
           onStart={onVideoStart}
-          onPause={onVideoPause}
           muted={true}
           onEnded={onVideoEnd}
         />
