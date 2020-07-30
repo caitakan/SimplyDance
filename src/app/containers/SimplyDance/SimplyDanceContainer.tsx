@@ -271,13 +271,12 @@ export const SimplyDanceContainer = React.memo((props: RouteComponentProps<{ [ke
     keyIndexRef.current = -1;
   };
   return (
-    <div className="simply-dance-container" style={{ margin: '0 150px' }}>
-      <img
-        // src="https://cdn.pixabay.com/photo/2015/10/29/14/42/dance-1012474_960_720.jpg"
-        src="banner.png"
+    <div className="simply-dance-container">
+      {/* <img
+        src="https://cdn.pixabay.com/photo/2015/10/29/14/42/dance-1012474_960_720.jpg"
         className="banner"
         style={{ width: '1400px', height: '248px', margin: '0 100px' }}
-      />
+      /> */}
       <div className="two-video-container" style={{ display: 'flex', margin: '20px 100px' }}>
         <ReactPlayer
           ref={setPlayerRef}
@@ -296,20 +295,7 @@ export const SimplyDanceContainer = React.memo((props: RouteComponentProps<{ [ke
           onEnded={onVideoEnd}
         />
 
-        <button
-          className="start-button"
-          onClick={refVideoPlayPauseToggle}
-          style={{
-            width: 160,
-            height: 160,
-            margin: 'auto 20px',
-            background: 'aqua',
-            padding: 35,
-            borderRadius: '50%',
-            boxShadow: '7px 5px 20px navy',
-            fontSize: 30
-          }}
-        >
+        <button className="start-button" onClick={refVideoPlayPauseToggle}>
           {isRefVideoPlay ? 'Pause' : 'Start'}
         </button>
         <video className="user-video" id="userVideo" playsInline style={{ display: 'none' }} />
