@@ -20,8 +20,8 @@ export const SimplyDanceContainer = React.memo((props: RouteComponentProps<{ [ke
   const defaultMobileNetMultiplier = 0.75;
   const defaultMobileNetStride = 16;
   const defaultMobileNetInputResolution = 500;
-  const defaultHardLevel = React.useRef(0.5);
-  const [defaultdifficulty, setdefaultdifficulty] = React.useState<number>(0.5);
+  const defaultHardLevel = React.useRef(0.35);
+  const [defaultdifficulty, setdefaultdifficulty] = React.useState<number>(0.35);
   const keys: string[] = keysData.map((key: any) => Object.keys(key)[0]);
   let j = 0;
   const newKeys = [keys[0]];
@@ -94,6 +94,7 @@ export const SimplyDanceContainer = React.memo((props: RouteComponentProps<{ [ke
 
     return video;
   }
+  const toggleRef = React.useRef(false);
   const keyIndexRef = React.useRef(-1);
   const startTimeRef = React.useRef(undefined as any);
   const showSkeletonRef = React.useRef(false);
@@ -160,14 +161,16 @@ export const SimplyDanceContainer = React.memo((props: RouteComponentProps<{ [ke
             var poseVector = createPoseVector(keypoints);
             var gtVector = refKeypoint ? createPoseVector(refKeypoint) : keypoints;
             var similarityScore = cosineDistanceMatching(poseVector, gtVector, newKeys[keyIndexRef.current - 1]);
-            // console.log(similarityScore);
             if (similarityScore < defaultHardLevel.current) {
-              console.log('sim score', poseVector, similarityScore);
+              //   console.log('sim score', poseVector, similarityScore);
               overRideRef.current = true;
               showSkeletonRef.current = false;
+              if (!isExerciseMode) {
+                toggleRef.current && playModeMatch();
+              }
               refVideoPlayPauseToggle();
             }
-            if (Date.now() - startTimeRef.current >= 2000 && showSkeletonRef.current) {
+            if (Date.now() - startTimeRef.current >= 2000 && showSkeletonRef.current && isExerciseMode) {
               drawKeypoints(refKeypoint, minPartConfidence, ctx);
               drawSkeleton(refKeypoint, minPartConfidence, ctx);
             }
@@ -191,6 +194,8 @@ export const SimplyDanceContainer = React.memo((props: RouteComponentProps<{ [ke
               showSkeletonRef.current = true;
               refVideoPlayPauseToggle();
             }
+            toggleRef.current = true;
+
             keyIndexRef.current++;
           }
           if (guiState.output.showPoints) {
@@ -210,6 +215,15 @@ export const SimplyDanceContainer = React.memo((props: RouteComponentProps<{ [ke
 
     poseDetectionFrame();
   }
+
+  const [score, setscore] = React.useState<number>(0);
+  const scoreRef = React.useRef(0);
+  const playModeMatch = () => {
+    toggleRef.current = false;
+    scoreRef.current++;
+    setscore(scoreRef.current);
+    console.log(scoreRef.current);
+  };
 
   async function bindPage() {
     const net = await posenet.load({ architecture: 'ResNet50' } as any);
@@ -266,12 +280,12 @@ export const SimplyDanceContainer = React.memo((props: RouteComponentProps<{ [ke
     setdefaultdifficulty(0.5);
   };
   const onNormalClick = () => {
-    defaultHardLevel.current = 0.4;
-    setdefaultdifficulty(0.4);
+    defaultHardLevel.current = 0.45;
+    setdefaultdifficulty(0.45);
   };
   const onHardClick = () => {
-    defaultHardLevel.current = 0.3;
-    setdefaultdifficulty(0.3);
+    defaultHardLevel.current = 0.35;
+    setdefaultdifficulty(0.35);
   };
   const onChangeModeClick = () => {
     props.history.push('/');
@@ -279,16 +293,21 @@ export const SimplyDanceContainer = React.memo((props: RouteComponentProps<{ [ke
   return (
     <div className="simply-dance-container">
       <div className="difficulty-container">
+        {!isExerciseMode && (
+          <button className="difficulty-button" style={{ marginBottom: 50 }}>
+            {`${Math.ceil((100 * score) / newKeys.length)}/100`}
+          </button>
+        )}
         <button className="difficulty-button" style={{ marginBottom: 50 }} onClick={onChangeModeClick}>
           Change Mode
         </button>
         <button className={`difficulty-button${defaultdifficulty === 0.5 ? ' selected' : ''}`} onClick={onEasyClick}>
           Easy
         </button>
-        <button className={`difficulty-button${defaultdifficulty === 0.4 ? ' selected' : ''}`} onClick={onNormalClick}>
+        <button className={`difficulty-button${defaultdifficulty === 0.45 ? ' selected' : ''}`} onClick={onNormalClick}>
           Normal
         </button>
-        <button className={`difficulty-button${defaultdifficulty === 0.3 ? ' selected' : ''}`} onClick={onHardClick}>
+        <button className={`difficulty-button${defaultdifficulty === 0.35 ? ' selected' : ''}`} onClick={onHardClick}>
           Hard
         </button>
       </div>
