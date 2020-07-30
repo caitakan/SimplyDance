@@ -61,6 +61,7 @@ export const SimplyDanceContainer = React.memo((props: RouteComponentProps<{ [ke
     },
     net: (null as unknown) as posenet.PoseNet
   };
+  const [showContent, setshowContent] = React.useState<boolean>(false);
 
   async function setupCamera() {
     // if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
@@ -237,6 +238,7 @@ export const SimplyDanceContainer = React.memo((props: RouteComponentProps<{ [ke
     let video;
     try {
       video = await loadVideo();
+      setshowContent(true);
     } catch (e) {
       throw e;
     }
@@ -319,25 +321,30 @@ export const SimplyDanceContainer = React.memo((props: RouteComponentProps<{ [ke
         </button>
       </div>
       <div className="two-video-container" style={{ display: 'flex', margin: '20px 100px' }}>
-        <ReactPlayer
-          ref={setPlayerRef}
-          width={videoWidth}
-          height={videoHeight}
-          style={{ background: 'black' }}
-          playing={isRefVideoPlay}
-          url="https://youtu.be/BIB1QHuEsr4"
-          config={{
-            file: { attributes: { id: 'refVideo', crossOrigin: 'anonymous', width: videoWidth, height: videoHeight } }
-          }}
-          onClick={null}
-          onStart={onVideoStart}
-          muted={muted}
-          onEnded={onVideoEnd}
-        />
+        {!showContent && <div> loading...Please wait...</div>}
+        {showContent && (
+          <ReactPlayer
+            ref={setPlayerRef}
+            width={videoWidth}
+            height={videoHeight}
+            style={{ background: 'black' }}
+            playing={isRefVideoPlay}
+            url="https://youtu.be/BIB1QHuEsr4"
+            config={{
+              file: { attributes: { id: 'refVideo', crossOrigin: 'anonymous', width: videoWidth, height: videoHeight } }
+            }}
+            onClick={null}
+            onStart={onVideoStart}
+            muted={muted}
+            onEnded={onVideoEnd}
+          />
+        )}
 
-        <button className="start-button" onClick={refVideoPlayPauseToggle}>
-          {isRefVideoPlay ? 'Pause' : 'Start'}
-        </button>
+        {showContent && (
+          <button className="start-button" onClick={refVideoPlayPauseToggle}>
+            {isRefVideoPlay ? 'Pause' : 'Start'}
+          </button>
+        )}
         <video className="user-video" id="userVideo" playsInline style={{ display: 'none' }} />
         <canvas id="output" />
       </div>
