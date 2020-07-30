@@ -19,7 +19,7 @@ import * as tf from '@tensorflow/tfjs';
 const similarity = require('compute-cosine-similarity');
 
 const color = 'aqua';
-const boundingBoxColor = 'red';
+const boundingBoxColor = '#fe938c';
 const lineWidth = 2;
 
 export const tryResNetButtonName = 'tryResNetButton';
