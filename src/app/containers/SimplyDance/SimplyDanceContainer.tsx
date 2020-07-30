@@ -63,9 +63,9 @@ export const SimplyDanceContainer = React.memo((props: RouteComponentProps<{ [ke
   };
 
   async function setupCamera() {
-    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-      throw new Error('Browser API navigator.mediaDevices.getUserMedia not available');
-    }
+    // if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+    //   throw new Error('Browser API navigator.mediaDevices.getUserMedia not available');
+    // }
 
     const userVideo = document.getElementById('userVideo') as any;
     userVideo.width = videoWidth;
@@ -155,6 +155,13 @@ export const SimplyDanceContainer = React.memo((props: RouteComponentProps<{ [ke
       // scores
       poses.forEach(({ score, keypoints }: any) => {
         if (score >= minPoseConfidence) {
+          const currentTime = Math.ceil(playerRef.current.getCurrentTime() * 1000);
+          console.log(
+            keyIndexRef.current,
+            currentTime,
+            newKeys[keyIndexRef.current],
+            Number(newKeys[keyIndexRef.current]) * 50 - currentTime
+          );
           if (keyIndexRef.current > 0 && keyIndexRef.current <= newKeys.length) {
             const refKeypoint = keyPointsDictionary[newKeys[keyIndexRef.current - 1]];
 
@@ -177,11 +184,10 @@ export const SimplyDanceContainer = React.memo((props: RouteComponentProps<{ [ke
 
             drawBoundingBox(refKeypoint, ctx);
           }
-          const currentTime = Math.ceil(playerRef.current.getCurrentTime() * 1000);
 
           if (
-            currentTime - 35 < timeStamps[keyIndexRef.current] &&
-            timeStamps[keyIndexRef.current] < currentTime + 35
+            currentTime - 1000 < timeStamps[keyIndexRef.current] &&
+            timeStamps[keyIndexRef.current] < currentTime + 1000
           ) {
             if (isExerciseMode) {
               console.log(
@@ -290,6 +296,7 @@ export const SimplyDanceContainer = React.memo((props: RouteComponentProps<{ [ke
   const onChangeModeClick = () => {
     props.history.push('/');
   };
+  const [muted] = React.useState<boolean>(isExerciseMode);
   return (
     <div className="simply-dance-container">
       <div className="difficulty-container">
@@ -324,7 +331,7 @@ export const SimplyDanceContainer = React.memo((props: RouteComponentProps<{ [ke
           }}
           onClick={null}
           onStart={onVideoStart}
-          muted={true}
+          muted={muted}
           onEnded={onVideoEnd}
         />
 
